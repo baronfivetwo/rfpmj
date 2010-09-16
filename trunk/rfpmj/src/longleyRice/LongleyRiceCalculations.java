@@ -334,7 +334,7 @@ public class LongleyRiceCalculations {
 		}
 	}
 	
-	// TODO: Fix from here down 
+	 
 	public void lrprop (double d, propType prop, propaType propa)  // PaulM_lrprop
 	{  boolean wlos, wscat;
 	  double dmin, xae;
@@ -347,25 +347,33 @@ public class LongleyRiceCalculations {
 
 	  if(prop.getMdp()!=0)
 	    {
-		  for(j=0;j<2;j++)
-		  propa.dls[j]=sqrt(2.0*prop.he[j]/prop.gme);
-		  propa.dlsa=propa.dls[0]+propa.dls[1];
-		  propa.dla=prop.dl[0]+prop.dl[1];
-		  propa.tha=mymax(prop.the[0]+prop.the[1],-propa.dla*prop.gme);
+		
+		for(j=0;j<2;j++){
+		  double[] dls = propa.getDls();
+		  double[] he  = prop.getHe();
+		  double[] hg  = prop.getHg();
+		  double[] dl  = prop.getDl();
+		  double[] the = prop.getThe();
+		  dls[j]=Math.sqrt(2.0*he[j]/prop.getGme());
+		  propa.setDls(dls);
+		  
+		  propa.setDlsa( dls[0]+ dls[1]);
+		  propa.setDla( dl[0]+ dl[1] );
+		  propa.setTha( mymax( the[0]+ the[1],-propa.getDla()*prop.getGme()));
 		  wlos=false;
 		  wscat=false;
-		  if(prop.wn<0.838 || prop.wn>210.0)
-	        	{ prop.kwx=mymax(prop.kwx,1);
+		  if(prop.getWn()<0.838 || prop.getWn()>210.0)
+	        	{ prop.setKwx( mymax(prop.getKwx(),1));
 			}
 		  for(j=0;j<2;j++)
-		    if(prop.hg[j]<1.0 || prop.hg[j]>1000.0)
-	          	{ prop.kwx=mymax(prop.kwx,1);
+		    if( hg[j]<1.0 || hg[j]>1000.0)
+	          	{ prop.setKwx(mymax(prop.getKwx(),1));
 			}
 		  for(j=0;j<2;j++)
-		    if( abs(prop.the[j]) >200e-3 || prop.dl[j]<0.1*propa.dls[j] ||
-			   prop.dl[j]>3.0*propa.dls[j] )
-			{ prop.kwx=mymax(prop.kwx,3);
-			}
+		    if( Math.abs( the[j]) >200e-3 || dl[j]<0.1*dls[j] ||
+			   dl[j]>3.0*dls[j] )
+			{ prop.setKwx(mymax(prop.getKwx(),3));
+			}// TODO: Fix from here down
 		  if( prop.ens < 250.0   || prop.ens > 400.0  || 
 		      prop.gme < 75e-9 || prop.gme > 250e-9 || 
 			  prop_zgnd.real() <= abs(prop_zgnd.imag()) || 
