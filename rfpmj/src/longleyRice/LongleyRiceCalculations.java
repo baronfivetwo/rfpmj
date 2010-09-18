@@ -2,39 +2,39 @@ package longleyRice;
 
 import org.apache.commons.math.complex.*;
 
-public class LongleyRiceCalculations {
+protected class LongleyRiceCalculations {
 
 	private static final double THIRD = 1.0 / 3.0;
 
-	protected int mymin(int i, int j) {
+	private int mymin(int i, int j) {
 		if (i < j)
 			return i;
 		else
 			return j;
 	}
 
-	protected int mymax(int i, int j) {
+	private int mymax(int i, int j) {
 		if (i > j)
 			return i;
 		else
 			return j;
 	}
 
-	protected double mymin(double a, double b) {
+	private double mymin(double a, double b) {
 		if (a < b)
 			return a;
 		else
 			return b;
 	}
 
-	protected double mymax(double a, double b) {
+	private double mymax(double a, double b) {
 		if (a > b)
 			return a;
 		else
 			return b;
 	}
 
-	protected double FORTRAN_DIM(double x, double y) { // This performs the
+	private double FORTRAN_DIM(double x, double y) { // This performs the
 														// FORTRAN DIM function.
 														// result is x-y if x is
 														// greater than y;
@@ -47,7 +47,7 @@ public class LongleyRiceCalculations {
 	}
 
 	// TODO: Check base of log in original Source Code for now assume base e
-	protected double aknfe(double v2) {
+	private double aknfe(double v2) {
 		double a;
 		if (v2 < 5.76)
 			a = 6.02 + 9.11 * Math.sqrt(v2) - 1.27 * v2;
@@ -57,7 +57,7 @@ public class LongleyRiceCalculations {
 	}
 
 	// TODO: Check if pow and exp is the same in java as in cpp
-	protected double fht(double x, double pk) {
+	private double fht(double x, double pk) {
 		double w, fhtv;
 		if (x < 200.0) {
 			w = -Math.log(pk);
@@ -77,7 +77,7 @@ public class LongleyRiceCalculations {
 		return fhtv;
 	}
 
-	protected double h0f(double r, double et) {
+	private double h0f(double r, double et) {
 		double[] a = { 25.0, 80.0, 177.0, 395.0, 705.0 };
 		double[] b = { 24.0, 45.0, 68.0, 80.0, 105.0 };
 		double q, x;
@@ -100,7 +100,7 @@ public class LongleyRiceCalculations {
 		return h0fv;
 	}
 
-	protected double ahd(double td)
+	private double ahd(double td)
 	{ int i;
 	  double[] a = {   133.4,    104.6,     71.8};
 	  double[] b = {0.332e-3, 0.212e-3, 0.157e-3};
@@ -115,7 +115,7 @@ public class LongleyRiceCalculations {
 	}
 
 	
-	protected double adiff(double d, propType prop, propaType propa) {
+	private double adiff(double d, propType prop, propaType propa) {
 		Complex propzgnd = new Complex(prop.getZgndreal(), prop.getZgndimag()); // complex<double>
 																				// prop_zgnd(prop.zgndreal,prop.zgndimag);
 		double wd1 = 0, xd1 = 0, afo = 0, qk = 0, aht = 0, xht = 0;
@@ -170,7 +170,7 @@ public class LongleyRiceCalculations {
 		return adiffv;
 	}
 	
-	protected double  ascat( double d, propType prop, propaType propa)
+	private double  ascat( double d, propType prop, propaType propa)
 	{ @SuppressWarnings("unused")// TODO: propzgnd is needed?
 	  Complex propzgnd = new Complex(prop.getZgndreal(), prop.getZgndimag()); //complex<double> prop_zgnd(prop.zgndreal,prop.zgndimag);
 	  double ad = 0, rr = 0, etq = 0, h0s = 0;
@@ -224,7 +224,7 @@ public class LongleyRiceCalculations {
 		}
 	  return ascatv;
 	}
-	public double qerfi( double q )
+	protected double qerfi( double q )
 	{ double x, t, v;
 	  double c0  = 2.515516698;
 	  double c1  = 0.802853;
@@ -240,7 +240,7 @@ public class LongleyRiceCalculations {
 	  if (x < 0.0) v = -v;
 	  return v;
 	}
-	public void qlrps( double fmhz, double zsys, double en0,
+	protected void qlrps( double fmhz, double zsys, double en0,
 	          int ipol, double eps, double sgm, propType prop)
 	{ double gma=157e-9;
 	  prop.setWn(fmhz/47.7);
@@ -263,10 +263,10 @@ public class LongleyRiceCalculations {
 	  prop.setZgndreal(propzgnd.getReal());  prop.setZgndimag(propzgnd.getImaginary());
 	}
 
-	protected double abq_alos (Complex r)
+	private double abq_alos (Complex r)
 	{ return r.getReal()*r.getReal()+r.getImaginary()*r.getImaginary(); }
 
-	protected double  alos( double d, propType prop, propaType propa)
+	private double  alos( double d, propType prop, propaType propa)
 	{ Complex propzgnd = new Complex(prop.getZgndreal(),prop.getZgndimag());
 	  double wls = 0;
 	  Complex r;
@@ -296,9 +296,10 @@ public class LongleyRiceCalculations {
 		 }
 	  return alosv;
 	}
-	public void qlra( int kst[], int klimx, int mdvarx,
+	protected void qlra( int kst[], int klimx, int mdvarx,
 	          propType prop, propvType propv)
-	{ Complex propzgnd = new Complex(prop.getZgndreal(),prop.getZgndimag());
+	{ @SuppressWarnings("unused")
+	Complex propzgnd = new Complex(prop.getZgndreal(),prop.getZgndimag());
 	  double q;
 	  double[] he = prop.getHe();
 	  double[] hg = prop.getHg();
@@ -335,9 +336,9 @@ public class LongleyRiceCalculations {
 	}
 	
 	 
-	public void lrprop (double d, propType prop, propaType propa)  // PaulM_lrprop
-	{  boolean wlos, wscat;
-	  double dmin, xae;
+	protected void lrprop (double d, propType prop, propaType propa)  // PaulM_lrprop
+	{  boolean wlos = false, wscat = false;
+	  double dmin = 0, xae = 0;
 	  Complex propzgnd = new Complex(prop.getZgndreal(),prop.getZgndimag());
 	  double a0, a1, a2, a3, a4, a5, a6;
 	  double d0, d1, d2, d3, d4, d5, d6;
@@ -347,15 +348,16 @@ public class LongleyRiceCalculations {
 
 	  if(prop.getMdp()!=0)
 	    {
-		
+		double[] dls = propa.getDls();
+		double[] he  = prop.getHe();
 		for(j=0;j<2;j++){
-		  double[] dls = propa.getDls();
-		  double[] he  = prop.getHe();
+		  dls[j]=Math.sqrt(2.0*he[j]/prop.getGme());
+		}
+		  propa.setDls(dls);
 		  double[] hg  = prop.getHg();
 		  double[] dl  = prop.getDl();
 		  double[] the = prop.getThe();
-		  dls[j]=Math.sqrt(2.0*he[j]/prop.getGme());
-		  propa.setDls(dls);
+		  
 		  
 		  propa.setDlsa( dls[0]+ dls[1]);
 		  propa.setDla( dl[0]+ dl[1] );
@@ -374,129 +376,131 @@ public class LongleyRiceCalculations {
 			   dl[j]>3.0*dls[j] )
 			{ prop.setKwx(mymax(prop.getKwx(),3));
 			}// TODO: Fix from here down
-		  if( prop.ens < 250.0   || prop.ens > 400.0  || 
-		      prop.gme < 75e-9 || prop.gme > 250e-9 || 
-			  prop_zgnd.real() <= abs(prop_zgnd.imag()) || 
-			  prop.wn  < 0.419   || prop.wn  > 420.0 )
-		     	{ prop.kwx=4;
+		  if( prop.getEns() < 250.0   || prop.getEns() > 400.0  || 
+		      prop.getGme() < 75e-9 || prop.getGme() > 250e-9 || 
+			  propzgnd.getReal() <= Math.abs(propzgnd.getImaginary()) || 
+			  prop.getWn()  < 0.419   || prop.getWn()  > 420.0 )
+		     	{ prop.setKwx(4);
 			}
-	          for(j=0;j<2;j++)
-		    if(prop.hg[j]<0.5 || prop.hg[j]>3000.0)
-			{ prop.kwx=4;
+	          for(j=0;j<2;j++)// Experiment here see if getter will allow for getHG()[j]
+		    if(prop.getHg()[j]<0.5 || prop.getHg()[j]>3000.0)
+			{ prop.setKwx(4);
 			}
-		  dmin=abs(prop.he[0]-prop.he[1])/200e-3;
+		  dmin=Math.abs(prop.getHe()[0]-prop.getHe()[1])/200e-3;
 		  q=adiff(0.0,prop,propa);
-		  xae=pow(prop.wn*pow(prop.gme,2),-THIRD);
-		  d3=mymax(propa.dlsa,1.3787*xae+propa.dla);
+		  xae=Math.pow(prop.getWn()*Math.pow(prop.getGme(),2),-THIRD);
+		  d3=mymax(propa.getDlsa(),1.3787*xae+propa.getDla());
 		  d4=d3+2.7574*xae;
 		  a3=adiff(d3,prop,propa);
 		  a4=adiff(d4,prop,propa);
-		  propa.emd=(a4-a3)/(d4-d3);
-		  propa.aed=a3-propa.emd*d3;
+		  propa.setEmd((a4-a3)/(d4-d3));
+		  propa.setAed(a3-propa.getEmd()*d3);
 	     }
-	  if(prop.mdp>=0)
-	    {	prop.mdp=0;
-		prop.dist=d;
+	  if(prop.getMdp()>=0)
+	    {	prop.setMdp(0);
+		prop.setDist(d);
 	    }
-	  if(prop.dist>0.0)
+	  if(prop.getDist()>0.0)
 	    {
-		  if(prop.dist>1000e3)
-		    { prop.kwx=mymax(prop.kwx,1);
+		  if(prop.getDist()>1000e3)
+		    { prop.setKwx(mymax(prop.getKwx(),1));
 		    }
-		  if(prop.dist<dmin)
-		    { prop.kwx=mymax(prop.kwx,3);
+		  if(prop.getDist()<dmin)
+		    { prop.setKwx(mymax(prop.getKwx(),3));
 		    }
-		  if(prop.dist<1e3 || prop.dist>2000e3)
-		    { prop.kwx=4;
+		  if(prop.getDist()<1e3 || prop.getDist()>2000e3)
+		    { prop.setKwx(4);
 		    }
 	    }
-	  if(prop.dist<propa.dlsa)
+	  if(prop.getDist()<propa.getDlsa())
 	    {
 		  if(!wlos)
 		    {
 				q=alos(0.0,prop,propa);
-				d2=propa.dlsa;
-				a2=propa.aed+d2*propa.emd;
-				d0=1.908*prop.wn*prop.he[0]*prop.he[1];
-	          	if(propa.aed>=0.0)
-					{ d0=mymin(d0,0.5*propa.dla);
-					  d1=d0+0.25*(propa.dla-d0);
+				d2=propa.getDlsa();
+				a2=propa.getAed()+d2*propa.getEmd();
+				d0=1.908*prop.getWn()*prop.getHe()[0]*prop.getHe()[1];
+	          	if(propa.getAed()>=0.0)
+					{ d0=mymin(d0,0.5*propa.getDla());
+					  d1=d0+0.25*(propa.getDla()-d0);
 		            }
 				else
-	            	d1=mymax(-propa.aed/propa.emd,0.25*propa.dla);
+	            	d1=mymax(-propa.getAed()/propa.getEmd(),0.25*propa.getDla());
 				a1=alos(d1,prop,propa);
 				wq=false;
 				if(d0<d1)
 					{
 						a0=alos(d0,prop,propa);
-						q=log(d2/d0);
-						propa.ak2=mymax(0.0,((d2-d0)*(a1-a0)-(d1-d0)*(a2-a0)) /
-									   ((d2-d0)*log(d1/d0)-(d1-d0)*q));
-						wq=propa.aed>=0.0 || propa.ak2>0.0;
+						q=Math.log(d2/d0);
+						propa.setAk2(mymax(0.0,((d2-d0)*(a1-a0)-(d1-d0)*(a2-a0)) /
+									   ((d2-d0)*Math.log(d1/d0)-(d1-d0)*q)));
+						wq=propa.getAed()>=0.0 || propa.getAk2()>0.0;
 						if(wq)
 							{ 
-								propa.ak1=(a2-a0-propa.ak2*q)/(d2-d0);
-								if(propa.ak1<0.0)
-									{ propa.ak1=0.0;
-	                      				propa.ak2=FORTRAN_DIM(a2,a0)/q;
-										if(propa.ak2==0.0) propa.ak1=propa.emd;
+								propa.setAk1((a2-a0-propa.getAk2()*q)/(d2-d0));
+								if(propa.getAk1()<0.0)
+									{ propa.setAk1(0.0);
+	                      				propa.setAk2(FORTRAN_DIM(a2,a0)/q);
+										if(propa.getAk2()==0.0) propa.setAk1(propa.getEmd());
 	                    			}
 							}
 					}
 				if(!wq)
-					{	propa.ak1=FORTRAN_DIM(a2,a1)/(d2-d1);
-						propa.ak2=0.0;
-						if(propa.ak1==0.0)	propa.ak1=propa.emd;
+					{	propa.setAk1(FORTRAN_DIM(a2,a1)/(d2-d1));
+						propa.setAk2(0.0);
+						if(propa.getAk1()==0.0)	propa.setAk1(propa.getEmd());
 					}
-				propa.ael=a2-propa.ak1*d2-propa.ak2*log(d2);
+				propa.setAel(a2-propa.getAk1()*d2-propa.getAk2()*Math.log(d2));
 				wlos=true;
 			}
-	      if(prop.dist>0.0)
-	        prop.aref=propa.ael+propa.ak1*prop.dist +
-		               propa.ak2*log(prop.dist);
+	      if(prop.getDist()>0.0)
+	        prop.setAref(propa.getAel()+propa.getAk1()*prop.getDist() +
+		               propa.getAk2()*Math.log(prop.getDist()));
 	    }
-	  if(prop.dist<=0.0 || prop.dist>=propa.dlsa)
+	  if(prop.getDist()<=0.0 || prop.getDist()>=propa.getDlsa())
 	    { if(!wscat)
 		    { 
 			  q=ascat(0.0,prop,propa);
-			  d5=propa.dla+200e3;
+			  d5=propa.getDla()+200e3;
 			  d6=d5+200e3;
 			  a6=ascat(d6,prop,propa);
 			  a5=ascat(d5,prop,propa);
 			  if(a5<1000.0)
-			    { propa.ems=(a6-a5)/200e3;
-			      propa.dx=mymax(propa.dlsa,mymax(propa.dla+0.3*xae *
-				         log(47.7*prop.wn),(a5-propa.aed-propa.ems*d5) /
-						 (propa.emd-propa.ems)));
-			      propa.aes=(propa.emd-propa.ems)*propa.dx+propa.aed;
+			    { propa.setEms((a6-a5)/200e3);
+			      propa.setDx(mymax(propa.getDlsa(),mymax(propa.getDla()+0.3*xae *
+				         Math.log(47.7*prop.getWn()),(a5-propa.getAed()-propa.getEms()*d5) /
+						 (propa.getEmd()-propa.getEms()))));
+			      propa.setAes((propa.getEmd()-propa.getEms())*propa.getDx()+propa.getAed());
 			    }
 			  else
-			    { propa.ems=propa.emd;
-			      propa.aes=propa.aed;
-			      propa.dx=10.e6;
+			    { propa.setEms(propa.getEmd());
+			      propa.setAes(propa.getAed());
+			      propa.setDx(10.e6);
 			    }
 			  wscat=true;
 		    }
-		  if(prop.dist>propa.dx)
-		    prop.aref=propa.aes+propa.ems*prop.dist;
+	    if(prop.getDist()>propa.getDx())
+		    prop.setAref(propa.getAes()+propa.getEms()*prop.getDist());
 		  else
-		    prop.aref=propa.aed+propa.emd*prop.dist;
+		    prop.setAref(propa.getAed()+propa.getEmd()*prop.getDist());
 	    }
-	  prop.aref=mymax(prop.aref,0.0);
-	}
-protected double curve (double c1, double c2, double x1,
+	  	prop.setAref(mymax(prop.getAref(),0.0));
+	 }
+	  
+	
+private double curve (double c1, double c2, double x1,
             double x2, double x3, double de)
-{ return (c1+c2/(1.0+pow((de-x2)/x3,2.0)))*pow(de/x1,2.0) /
-       (1.0+pow(de/x1,2.0));
+{ return (c1+c2/(1.0+Math.pow((de-x2)/x3,2.0)))*Math.pow(de/x1,2.0) /
+       (1.0+Math.pow(de/x1,2.0));
 }
 
-public double avar(double zzt, double zzl, double zzc,
+protected double avar(double zzt, double zzl, double zzc,
        propType prop, propvType propv)
-{  int kdv;
-double dexa, de, vmd, vs0, sgl, sgtm, sgtp, sgtd, tgtd,
-              gm, gp, cv1, cv2, yv1, yv2, yv3, csm1, csm2, ysm1, ysm2,
-				ysm3, csp1, csp2, ysp1, ysp2, ysp3, csd1, zd, cfm1, cfm2,
-				cfm3, cfp1, cfp2, cfp3;
+{  int kdv = 0;
+double dexa = 0, de = 0, vmd= 0, vs0 = 0, sgl = 0 , sgtm = 0, sgtp = 0 , sgtd = 0, tgtd = 0,
+              gm = 0, gp = 0, cv1 = 0, cv2 = 0, yv1 = 0, yv2 = 0, yv3 = 0, csm1 = 0, csm2 = 0, ysm1 = 0, ysm2 = 0,
+				ysm3 = 0, csp1 = 0, csp2 = 0, ysp1 = 0, ysp2 = 0, ysp3 = 0, csd1 = 0, zd = 0, cfm1 = 0, cfm2 = 0,
+				cfm3 = 0, cfp1 = 0, cfp2 = 0, cfp3 = 0;
 double[] bv1={-9.67,-0.62,1.26,-9.21,-0.62,-0.39,3.15};
 double[] bv2={12.7,9.19,15.5,9.05,9.19,2.86,857.9};
 double[] xv1={144.9e3,228.9e3,262.6e3,84.1e3,228.9e3,141.7e3,2222.e3};
@@ -520,18 +524,18 @@ double[] bfm3={0.0,0.0,0.0,0.0,1.77,0.0,0.0};
 double[] bfp1={1.0,0.93,1.0,0.93,0.93,1.0,1.0};
 double[] bfp2={0.0,0.31,0.0,0.19,0.31,0.0,0.0};
 double[] bfp3={0.0,2.00,0.0,1.79,2.00,0.0,0.0};
-boolean ws, w1;
+boolean ws = false, w1 = false;
 double rt=7.8, rl=24.0, avarv, q, vs, zt, zl, zc;
 double sgt, yr;
 int temp_klim = propv.getKlim()-1;
 
-if(propv.lvar>0)
-  {   switch(propv.lvar)
+if(propv.getLvar()>0)
+  {   switch(propv.getLvar())
 	     { default:
-		     if(propv.klim<=0 || propv.klim>7)
-			   { propv.klim = 5;
+		     if(propv.getKlim()<=0 || propv.getKlim()>7)
+			   { propv.setKlim(5);
 			     temp_klim = 4;
-			     { prop.kwx=mymax(prop.kwx,2);
+			     { prop.setKwx(mymax(prop.getKwx(),2));
 				 }
 			   }
 			 cv1 = bv1[temp_klim];
@@ -558,7 +562,7 @@ if(propv.lvar>0)
 			 cfp2=bfp2[temp_klim];
 			 cfp3=bfp3[temp_klim];
 		   case 4:
-           kdv=propv.mdvar;
+           kdv=propv.getMdvar();
 			 ws = kdv>=20;
            if(ws)
 			   kdv-=20;
@@ -567,20 +571,20 @@ if(propv.lvar>0)
 			   kdv-=10;
 			 if(kdv<0 || kdv>3)
 			   { kdv=0;
-			     prop.kwx=mymax(prop.kwx,2);
+			     prop.setKwx(mymax(prop.getKwx(),2));
 			   }
 		   case 3:
-		     q=log(0.133*prop.wn);
-			 gm=cfm1+cfm2/(pow(cfm3*q,2.0)+1.0);
-			 gp=cfp1+cfp2/(pow(cfp3*q,2.0)+1.0);
+		     q=Math.log(0.133*prop.getWn());
+			 gm=cfm1+cfm2/(Math.pow(cfm3*q,2.0)+1.0);
+			 gp=cfp1+cfp2/(Math.pow(cfp3*q,2.0)+1.0);
 		   case 2:
-		     dexa=sqrt(18e6*prop.he[0])+sqrt(18e6*prop.he[1]) +
-			      pow((575.7e12/prop.wn),THIRD);
+		     dexa=Math.sqrt(18e6*prop.getHe()[0])+Math.sqrt(18e6*prop.getHe()[1]) +
+			      Math.pow((575.7e12/prop.getWn()),THIRD);
 		   case 1:
-		     if(prop.dist<dexa)
-			   de=130e3*prop.dist/dexa;
+		     if(prop.getDist()<dexa)
+			   de=130e3*prop.getDist()/dexa;
 			 else
-			   de=130e3+prop.dist-dexa;
+			   de=130e3+prop.getDist()-dexa;
 		}
       vmd=curve(cv1,cv2,yv1,yv2,yv3,de);
 		sgtm=curve(csm1,csm2,ysm1,ysm2,ysm3,de) * gm;
@@ -590,14 +594,14 @@ if(propv.lvar>0)
 		if(w1)
 		  sgl=0.0;
 		else
-		  { q=(1.0-0.8*exp(-prop.dist/50e3))*prop.dh*prop.wn;
+		  { q=(1.0-0.8*Math.exp(-prop.getDist()/50e3))*prop.getDh()*prop.getWn();
 		    sgl=10.0*q/(q+13.0);
 		  }
 		if(ws)
 		  vs0=0.0;
 		else
-		  vs0=pow(5.0+3.0*exp(-de/100e3),2.0);
-		propv.lvar=0;
+		  vs0=Math.pow(5.0+3.0*Math.exp(-de/100e3),2.0);
+		propv.setLvar(0);
 	}
 zt=zzt;
 zl=zzl;
@@ -613,8 +617,9 @@ switch(kdv)
 	  case 2:
 	    zl=zt;
 	}
-if(fabs(zt)>3.1 || fabs(zl)>3.1 || fabs(zc)>3.1)
-    { prop.kwx=mymax(prop.kwx,1);
+
+if(Math.abs(zt)>3.1 || Math.abs(zl)>3.1 || Math.abs(zc)>3.1) // Original Line  fabs(zt)>3.1 || fabs(zl)>3.1 || fabs(zc)>3.1)
+    { prop.setKwx(mymax(prop.getKwx(),1));
 	  }
 if(zt<0.0)
   sgt=sgtm;
@@ -622,77 +627,91 @@ else if(zt<=zd)
   sgt=sgtp;
 else
   sgt=sgtd+tgtd/zt;
-vs=vs0+pow(sgt*zt,2.0)/(rt+zc*zc)+pow(sgl*zl,2.0)/(rl+zc*zc);
+vs=vs0+Math.pow(sgt*zt,2.0)/(rt+zc*zc)+Math.pow(sgl*zl,2.0)/(rl+zc*zc);
 if(kdv==0)
   { yr=0.0;
-    propv.sgc=sqrt(sgt*sgt+sgl*sgl+vs);
+    propv.setSgc(Math.sqrt(sgt*sgt+sgl*sgl+vs));
   }
 else if(kdv==1)
   { yr=sgt*zt;
-    propv.sgc=sqrt(sgl*sgl+vs);
+    propv.setSgc(Math.sqrt(sgl*sgl+vs));
   }
 else if(kdv==2)
-  { yr=sqrt(sgt*sgt+sgl*sgl)*zt;
-    propv.sgc=sqrt(vs);
+  { yr=Math.sqrt(sgt*sgt+sgl*sgl)*zt;
+    propv.setSgc(Math.sqrt(vs));
   }
 else
   { yr=sgt*zt+sgl*zl;
-    propv.sgc=sqrt(vs);
+    propv.setSgc(Math.sqrt(vs));
   }
-avarv=prop.aref-vmd-yr-propv.sgc*zc;
+avarv=prop.getAref()-vmd-yr-propv.getSgc()*zc;
 if(avarv<0.0)
   avarv=avarv*(29.0-avarv)/(29.0-10.0*avarv);
 return avarv;
 
 }
 
-protected void hzns (double pfl[], propType prop)
+private void hzns (double pfl[], propType prop)
 { boolean wq;
 int np;
 double xi, za, zb, qc, q, sb, sa;
 
 np=(int)pfl[0];
 xi=pfl[1];
-za=pfl[2]+prop.hg[0];
-zb=pfl[np+2]+prop.hg[1];
-qc=0.5*prop.gme;
-q=qc*prop.dist;
-prop.the[1]=(zb-za)/prop.dist;
-prop.the[0]=prop.the[1]-q;
-prop.the[1]=-prop.the[1]-q;
-prop.dl[0]=prop.dist;
-prop.dl[1]=prop.dist;
+za=pfl[2]+prop.getHg()[0];
+zb=pfl[np+2]+prop.getHg()[1];
+qc=0.5*prop.getGme();
+q=qc*prop.getDist();
+double[] the = prop.getThe();
+the[1]=(zb-za)/prop.getDist();
+the[0]=the[1]-q;
+the[1]=-the[1]-q;
+prop.setThe(the);
+double[] dl = prop.getDl();
+dl[0]=prop.getDist();
+dl[1]=prop.getDist();
+prop.setDl(dl);
 if(np>=2)
   { sa=0.0;
-	  sb=prop.dist;
+	  sb=prop.getDist();
 	  wq=true;
 	  for(int i=1;i<np;i++)
 	    {     sa+=xi;
 		  sb-=xi;
-		  q=pfl[i+2]-(qc*sa+prop.the[0])*sa-za;
+		  q=pfl[i+2]-(qc*sa+prop.getThe()[0])*sa-za;
 		  if(q>0.0)
-		    {	prop.the[0]+=q/sa;
-			prop.dl[0]=sa;
+		    {	
+			double[] the_temp = prop.getThe();
+			double[] dl_temp = prop.getDl();
+			the_temp[0]+=q/sa;
+			dl_temp[0]=sa;
+			prop.setThe(the_temp);
+			prop.setDl(dl_temp);
 			wq=false;
 		    }
 		  if(!wq)
-		    { q=pfl[i+2]-(qc*sb+prop.the[1])*sb-zb;
+		    { q=pfl[i+2]-(qc*sb+prop.getThe()[1])*sb-zb;
 		      if(q>0.0)
-			    { 	prop.the[1]+=q/sb;
-				prop.dl[1]=sb;
+			    { 
+		    	  double[] the_temp = prop.getThe();
+		    	  double[] dl_temp = prop.getDl(); 
+		    	  the_temp[1]+=q/sb;
+		    	  dl_temp[1]=sb;
+		    	  prop.setThe(the_temp);
+				  prop.setDl(dl_temp);
 			    }
 		    }
 	    }
   }
 }
 
-protected void z1sq1 (double[] z, double x1, double x2,
+private void z1sq1 (double[] z, double x1, double x2,
           double z0, double zn)
 { double xn, xa, xb, x, a, b;
 int n, ja, jb;
 xn=z[0];
-xa=int(FORTRAN_DIM(x1/z[1],0.0));
-xb=xn-int(FORTRAN_DIM(xn,x2/z[1]));
+xa=(int)FORTRAN_DIM(x1/z[1],0.0);
+xb=xn-(int)FORTRAN_DIM(xn,x2/z[1]);
 if(xb<=xa)
   { xa=FORTRAN_DIM(xa,1.0);
 	  xb=xn-FORTRAN_DIM(xn,xb+1.0);
@@ -717,11 +736,11 @@ z0=a-b*xb;
 zn=a+b*(xn-xb);
 }
 
-protected double qtile ( int &nn, double[] a, int ir)
-{ double q, r; 
-int m, n, i, j, j1, i0, k;
-bool done=false;
-bool goto10=true;
+private double qtile ( int nn, double[] a, int ir)
+{ double q = 0, r; 
+int m, n, i, j, j1 = 0, i0 = 0, k;
+boolean done=false;
+boolean goto10=true;
 
 m=0;
 n=nn;
@@ -767,27 +786,27 @@ while(!done)
 return q;
 }
 
-protected double qerf(double z)
+private double qerf(double z)
 { double b1=0.319381530, b2=-0.356563782, b3=1.781477937;
 double b4=-1.821255987, b5=1.330274429;
 double rp=4.317008, rrt2pi=0.398942280;
 double t, x, qerfv;
 x=z;
-t=fabs(x);
+t=Math.abs(x); 
 if(t>=10.0)
   qerfv=0.0;
 else
   { t=rp/(t+rp);
-	  qerfv=exp(-0.5*x*x)*rrt2pi*((((b5*t+b4)*t+b3)*t+b2)*t+b1)*t;
+	  qerfv=Math.exp(-0.5*x*x)*rrt2pi*((((b5*t+b4)*t+b3)*t+b2)*t+b1)*t;
 	}
 if(x<0.0) qerfv=1.0-qerfv;
 return qerfv;
 }
 
-protected double d1thx(double pfl[], double x1, double x2)
+private double d1thx(double pfl[], double x1, double x2)
 { int np, ka, kb, n, k, j;
 double d1thxv, sn, xa, xb;
-double *s; // TODO: Fix pointer problem
+double[] s; // TODO: Fix pointer problem
 
 np=(int)pfl[0];
 xa=x1/pfl[1];
@@ -800,7 +819,7 @@ ka=mymin(mymax(4,ka),25);
 n=10*ka-5;
 kb=n-ka+1;
 sn=n-1;
-assert( (s = new double[n+2]) != 0 );
+assert( (s = new double[n+2]) != 0 ); //problem here
 s[0]=sn;
 s[1]=1.0;
 xb=(xb-xa)/sn;
@@ -820,68 +839,82 @@ for(j=0;j<n;j++)
   { s[j+2]-=xa;
 	  xa=xa+xb;
 	}
-d1thxv=qtile(n-1,s+2,ka-1)-qtile(n-1,s+2,kb-1);
-d1thxv/=1.0-0.8*exp(-(x2-x1)/50.0e3);
-delete[] s;
+d1thxv=qtile(n-1,s+2,ka-1)-qtile(n-1,s+2,kb-1); // pesky pointer arithmetic 
+d1thxv/=1.0-0.8*Math.exp(-(x2-x1)/50.0e3);
+delete[] s; //??????????????
 return d1thxv;
 }
 
-public void  qlrpfl( double[] pfl, int klimx, int mdvarx,
+@SuppressWarnings("null") // Don't know if this is wise
+protected void  qlrpfl( double[] pfl, int klimx, int mdvarx,
       propType prop, propaType propa, propvType propv )
 { int np, j;
-double[] xl;
-double q, za, zb;
+double[] xl = null;
+double q = 0, za = 0, zb = 0;
 
-prop.dist=pfl[0]*pfl[1];
+prop.setDist(pfl[0]*pfl[1]);
 np=(int)pfl[0];
 hzns(pfl,prop);
 for(j=0;j<2;j++)
-  xl[j]=mymin(15.0*prop.hg[j],0.1*prop.dl[j]);
-xl[1]=prop.dist-xl[1];
-prop.dh=d1thx(pfl,xl[0],xl[1]);
-if(prop.dl[0]+prop.dl[1]>1.5*prop.dist)
+  xl[j]=mymin(15.0*prop.getHg()[j],0.1*prop.getDl()[j]);
+xl[1]=prop.getDist()-xl[1];
+prop.setDh(d1thx(pfl,xl[0],xl[1]));
+if(prop.getDl()[0]+prop.getDl()[1]>1.5*prop.getDist())
   { z1sq1(pfl,xl[0],xl[1],za,zb);
-	  prop.he[0]=prop.hg[0]+FORTRAN_DIM(pfl[2],za);
-	  prop.he[1]=prop.hg[1]+FORTRAN_DIM(pfl[np+2],zb);
-    for(j=0;j<2;j++)
-	    prop.dl[j]=sqrt(2.0*prop.he[j]/prop.gme) *
-		            exp(-0.07*sqrt(prop.dh/mymax(prop.he[j],5.0)));
-    q=prop.dl[0]+prop.dl[1];
-
-    if(q<=prop.dist)
-	    { q=pow(prop.dist/q,2.0);
+  	  double[] he_temp = prop.getHe(); 
+	  he_temp[0]=prop.getHg()[0]+FORTRAN_DIM(pfl[2],za);
+	  he_temp[1]=prop.getHg()[1]+FORTRAN_DIM(pfl[np+2],zb);
+	  prop.setHe(he_temp);
+    for(j=0;j<2;j++){
+    	double[] dl_temp = prop.getDl();
+	    dl_temp[j]=Math.sqrt(2.0*prop.getHe()[j]/prop.getGme()) *
+		            Math.exp(-0.07*Math.sqrt(prop.getDh()/mymax(prop.getHe()[j],5.0)));
+	    prop.setDl(dl_temp);
+    }
+    q=prop.getDl()[0]+prop.getDl()[1];
+    
+    if(q<=prop.getDist())
+	    { q=Math.pow(prop.getDist()/q,2.0);
 		  for(j=0;j<2;j++)
-          { prop.he[j]*=q;
-			  prop.dl[j]=sqrt(2.0*prop.he[j]/prop.gme) *
-		            exp(-0.07*sqrt(prop.dh/mymax(prop.he[j],5.0)));
+          { double[] dl_temp = prop.getDl();
+            double[] he_temp1 = prop.getHe();// messy but needed scope conflict 
+			  he_temp1[j]*=q;
+			  prop.setHe(he_temp1);
+			  dl_temp[j]=Math.sqrt(2.0*prop.getHe()[j]/prop.getGme()) *
+		            Math.exp(-0.07*Math.sqrt(prop.getDh()/mymax(prop.getHe()[j],5.0)));
+			  prop.setDl(dl_temp);
 			}
 		}
 	  for(j=0;j<2;j++)
-	    { q=sqrt(2.0*prop.he[j]/prop.gme);
-		  prop.the[j]=(0.65*prop.dh*(q/prop.dl[j]-1.0)-2.0 *
-		               prop.he[j])/q;
+	    { q=Math.sqrt(2.0*prop.getHe()[j]/prop.getGme());
+	      double[] the_temp = prop.getThe();
+		  the_temp[j]=(0.65*prop.getDh()*(q/prop.getDl()[j]-1.0)-2.0 *
+		               prop.getHe()[j])/q;
+		  prop.setThe(the_temp);
       }
 	}
 else
-  { z1sq1(pfl,xl[0],0.9*prop.dl[0],za,q);
-	  z1sq1(pfl,prop.dist-0.9*prop.dl[1],xl[1],q,zb);
-	  prop.he[0]=prop.hg[0]+FORTRAN_DIM(pfl[2],za);
-	  prop.he[1]=prop.hg[1]+FORTRAN_DIM(pfl[np+2],zb);
+  { z1sq1(pfl,xl[0],0.9*prop.getDl()[0],za,q);
+	  z1sq1(pfl,prop.getDist()-0.9*prop.getDl()[1],xl[1],q,zb);
+	  double[] he_temp = prop.getHe();
+	  he_temp[0]=prop.getHg()[0]+FORTRAN_DIM(pfl[2],za);
+	  he_temp[1]=prop.getHg()[1]+FORTRAN_DIM(pfl[np+2],zb);
 	}
-prop.mdp=-1;
-propv.lvar=mymax(propv.lvar,3);
+prop.setMdp(-1);
+propv.setLvar(mymax(propv.getLvar(),3));
 if(mdvarx>=0)
-  { propv.mdvar=mdvarx;
-    propv.lvar=mymax(propv.lvar,4);
+  { propv.setMdvar(mdvarx);
+    propv.setLvar(mymax(propv.getLvar(),4));
   }
 if(klimx>0)
-  { propv.klim=klimx;
-	  propv.lvar=5;
+  { propv.setKlim(klimx);
+	  propv.setLvar(5);
 	}
 lrprop(0.0,prop,propa);
 }
 
-protected double deg2rad(double d)
+@SuppressWarnings("unused")
+private double deg2rad(double d)
 {
 	return d * 3.1415926535897 / 180.0;
 }
