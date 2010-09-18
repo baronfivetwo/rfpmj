@@ -1,8 +1,8 @@
 package longleyRice;
 
 import org.apache.commons.math.complex.*;
-
-protected class LongleyRiceCalculations {
+//TODO: Fix All Pass By reference 
+public class LongleyRiceCalculations {
 
 	private static final double THIRD = 1.0 / 3.0;
 
