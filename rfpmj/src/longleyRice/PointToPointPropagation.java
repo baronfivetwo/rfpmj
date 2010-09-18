@@ -1,5 +1,7 @@
 package longleyRice;
 import longleyRice.LongleyRiceCalculations;
+
+//TODO: Fix All Pass By reference 
 public class PointToPointPropagation {
 	public void  point_to_point(double elev[], double tht_m, double rht_m,
 	          double eps_dielect, double sgm_conductivity, double eno_ns_surfref,

@@ -1,15 +1,15 @@
 package longleyRice;
-
+import longleyRice.LongleyRiceCalculations;
 public class AreaPropagation {
 	//********************************************************
 	//* Area Mode Calculations                               *
 	//********************************************************
-
-	public void area(long ModVar, double deltaH, double tht_m, double rht_m,
+	//TODO: Fix All Pass By reference 
+	public static void area(long ModVar, double deltaH, double tht_m, double rht_m,
 			  double dist_km, int TSiteCriteria, int RSiteCriteria, 
 	          double eps_dielect, double sgm_conductivity, double eno_ns_surfref,
 			  double frq_mhz, int radio_climate, int pol, double pctTime, double pctLoc,
-			  double pctConf, double &dbloss, char *strmode, int &errnum) // TODO: fix pointers
+			  double pctConf, double dbloss, String strmode, int errnum) // TODO: fix pointers
 	{
 		// pol: 0-Horizontal, 1-Vertical
 		// TSiteCriteria, RSiteCriteria:
@@ -31,42 +31,45 @@ public class AreaPropagation {
 		//         Other-  Warning: Some parameters are out of range.
 		//                          Results are probably invalid.
 		// NOTE: strmode is not used at this time.
-	  prop_type prop;
-	  propv_type propv;
-	  propa_type propa;
+	  propType prop = new propType();
+	  propvType propv = new propvType();
+	  propaType propa = new propaType();
 	  double zt, zl, zc, xlb;
 	  double fs;
-	  long ivar;
+	  int ivar;
 	  double eps, eno, sgm;
-	  long ipol;
-	  int kst[2];
+	  int ipol;
+	  int[] kst = {0,0};
 
 	  kst[0] = (int) TSiteCriteria;
 	  kst[1] = (int) RSiteCriteria;
-	  zt = qerfi(pctTime);
-	  zl = qerfi(pctLoc);
-	  zc = qerfi(pctConf);
+	  LongleyRiceCalculations calc = new LongleyRiceCalculations();
+	  zt = calc.qerfi(pctTime);
+	  zl = calc.qerfi(pctLoc);
+	  zc = calc.qerfi(pctConf);
 	  eps = eps_dielect;
 	  sgm = sgm_conductivity;
 	  eno = eno_ns_surfref;
-	  prop.dh = deltaH;
-	  prop.hg[0] = tht_m;  prop.hg[1] = rht_m;
-	  propv.klim = (__int32) radio_climate;
-	  prop.ens = eno;
-	  prop.kwx = 0;
-	  ivar = (long) ModVar;
-	  ipol = (long) pol;
-	  qlrps(frq_mhz, 0.0, eno, ipol, eps, sgm, prop);
-	  qlra(kst, propv.klim, ivar, prop, propv);
-	  if(propv.lvar<1) propv.lvar = 1;
-	  lrprop(dist_km * 1000.0, prop, propa);
-	  fs = 32.45 + 20.0 * log10(frq_mhz) + 20.0 * log10(prop.dist / 1000.0);
-	  xlb = fs + avar(zt, zl, zc, prop, propv);
+	  prop.setDh(deltaH);
+	  double[] hg = prop.getHg();
+	  hg[0] = tht_m;   hg[1] = rht_m;
+	  prop.setHg(hg);
+	  propv.setKlim( (int) radio_climate );
+	  prop.setEns(eno);
+	  prop.setKwx(0);
+	  ivar = (int) ModVar;
+	  ipol = (int) pol;
+	  calc.qlrps(frq_mhz, 0.0, eno, ipol, eps, sgm, prop);
+	  calc.qlra(kst, propv.getKlim(), ivar, prop, propv);
+	  if(propv.getLvar()<1) propv.setLvar(1);
+	  calc.lrprop(dist_km * 1000.0, prop, propa);
+	  fs = 32.45 + 20.0 * Math.log10(frq_mhz) + 20.0 * Math.log10(prop.getDist() / 1000.0);
+	  xlb = fs + calc.avar(zt, zl, zc, prop, propv);
 	  dbloss = xlb;
-	  if(prop.kwx==0)
+	  if(prop.getKwx()==0)
 		errnum = 0;
 	  else
-	    errnum = prop.kwx;
+	    errnum = prop.getKwx();
 	}
 
 
@@ -76,13 +79,10 @@ public class AreaPropagation {
 			  double frq_mhz, int radio_climate, int pol, double pctTime, double pctLoc,
 			  double pctConf)
 	{
-		char strmode[200];
-		int errnum;
-		double dbloss;
-		area(ModVar,deltaH,tht_m,rht_m,dist_km,TSiteCriteria,RSiteCriteria, 
-	          eps_dielect,sgm_conductivity,eno_ns_surfref,
-			  frq_mhz,radio_climate,pol,pctTime,pctLoc,
-			  pctConf,dbloss,strmode,errnum);
+		String strmode = null;
+		int errnum = 0;
+		double dbloss = 0;
+		longleyRice.AreaPropagation.area(ModVar,deltaH,tht_m,rht_m,dist_km,TSiteCriteria,RSiteCriteria, eps_dielect,sgm_conductivity,eno_ns_surfref,frq_mhz,radio_climate,pol,pctTime,pctLoc,pctConf,dbloss,strmode,errnum);
 		return dbloss;
 	}
 
