@@ -398,8 +398,7 @@ public class LongleyRiceCalculations {
 			for (j = 0; j < 2; j++)
 				if (Math.abs(the[j]) > 200e-3 || dl[j] < 0.1 * dls[j]
 						|| dl[j] > 3.0 * dls[j]) {
-					prop.setKwx(mymax(prop.getKwx(), 3));
-				}// TODO: Fix from here down
+					prop.setKwx(mymax(prop.getKwx(), 3));}
 			if (prop.getEns() < 250.0 || prop.getEns() > 400.0
 					|| prop.getGme() < 75e-9 || prop.getGme() > 250e-9
 					|| propzgnd.getReal() <= Math.abs(propzgnd.getImaginary())
@@ -512,6 +511,7 @@ public class LongleyRiceCalculations {
 		}
 		prop.setAref(mymax(prop.getAref(), 0.0));
 	}
+
 
 	private double curve(double c1, double c2, double x1, double x2, double x3,
 			double de) {
