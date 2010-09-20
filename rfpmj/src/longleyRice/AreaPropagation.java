@@ -2,6 +2,20 @@ package longleyRice;
 
 
 public class AreaPropagation {
+	private static int errnum;
+	private static double dbloss;
+	private String strmode;
+	public double getDbloss() {
+		return dbloss;
+	}
+
+	public int getErrnum() {
+		return errnum;
+	}
+
+	public String getStrmode() {
+		return strmode;
+	}	
 	// ********************************************************
 	// * Area Mode Calculations *
 	// ********************************************************
@@ -10,8 +24,7 @@ public class AreaPropagation {
 			double rht_m, double dist_km, int TSiteCriteria, int RSiteCriteria,
 			double eps_dielect, double sgm_conductivity, double eno_ns_surfref,
 			double frq_mhz, int radio_climate, int pol, double pctTime,
-			double pctLoc, double pctConf, double dbloss, String strmode,
-			int errnum) // TODO: fix pointers
+			double pctLoc, double pctConf) // TODO: fix pointers
 	{
 		// pol: 0-Horizontal, 1-Vertical
 		// TSiteCriteria, RSiteCriteria:
@@ -88,13 +101,10 @@ public class AreaPropagation {
 			double eps_dielect, double sgm_conductivity, double eno_ns_surfref,
 			double frq_mhz, int radio_climate, int pol, double pctTime,
 			double pctLoc, double pctConf) {
-		String strmode = null;
-		int errnum = 0;
-		double dbloss = 0;
 		longleyRice.AreaPropagation.area(ModVar, deltaH, tht_m, rht_m, dist_km,
 				TSiteCriteria, RSiteCriteria, eps_dielect, sgm_conductivity,
 				eno_ns_surfref, frq_mhz, radio_climate, pol, pctTime, pctLoc,
-				pctConf, dbloss, strmode, errnum);
+				pctConf);
 		return dbloss;
 	}
 
